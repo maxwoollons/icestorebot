@@ -177,7 +177,6 @@ function actions(){
     }
   })
 
-
   bot.on('error', function(err) {
     console.log('Error attempting to reconnect: ' + err.errno + '.');
     if (err.code == undefined) {
@@ -197,6 +196,8 @@ function actions(){
   function relog() {
   console.log("Attempting to reconnect...");
   StartUp()
+  }
+
 
 }
 
