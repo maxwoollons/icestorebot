@@ -190,7 +190,7 @@ function actions(){
   bot.on('end', function() {
     console.log("Bot has ended");
     // If set less than 30s you will get an invalid credentials error, which we handle above.
-    setTimeout(relog, 3000);  
+    setTimeout(relog, 30000);  
   });
   
   
