@@ -1,4 +1,6 @@
 const mineflayer = require('mineflayer')
+let request = require('request');
+var http = require('http')
 const fs = require('fs')
 StartUp()
 
@@ -80,7 +82,7 @@ function actions(){
 
   bot.on('chat', function (username, message) {
     if (message === '?help'){
-    bot.chat('> ?mitch ?nigga, ?nword, ?rules, ?cum & ?report {name}')
+    bot.chat('> ?mitch ?nigga, ?nword, ?rules, ?cum ?weather {city} & ?report {name}')
     }
   })
 
@@ -176,6 +178,49 @@ function actions(){
     bot.chat('/rules')
     }
   })
+
+
+
+
+
+
+  //weather api
+  bot.on('chat', function (username, message) {
+    if (message.includes('?weather')){
+        if(username !== 'IceStore') {
+          console.log(username)
+          output = message.split(' ')
+          var location = output[1];
+          const url = 'https://api.openweathermap.org/data/2.5/weather?q=' + location  +  '&appid=37bf2c1109e88abd6360835f1bae2db5'
+          const request = require('request');
+          request(url, function (error, response, body) {
+          
+            let json = JSON.parse(body);
+            
+              var temprature = (json.main.temp - 273.15);
+              var temprature = temprature.toFixed(2);
+              console.log(temprature)
+              console.log(json.weather[0].main);
+              bot.chat('> The temprature in ' + location + ' is ' + temprature + ' celsius. The weather is currently ' + json.weather[0].main + '.')
+          });
+
+        
+         
+           // console.log(JSON.parse(data).main.temp);
+           // console.log(JSON.parse(data).weather.main);
+
+        
+        }
+        
+      }
+    }
+  )
+
+
+
+
+
+  //Reconnect Script
 
   bot.on('error', function(err) {
     console.log('Error attempting to reconnect: ' + err.errno + '.');
