@@ -174,7 +174,7 @@ function actions(){
 
 
   bot.on('chat', function (username, message) {
-    if (message === '?quit'){
+    if (message === '?quitgame'){
     bot.chat('/rules')
     }
   })
@@ -196,13 +196,24 @@ function actions(){
           request(url, function (error, response, body) {
           
             let json = JSON.parse(body);
+              if (json.cod == "404"){
+                bot.chat('> That is a invalid city :(')
+                return
+              }
+              else {
             
               var temprature = (json.main.temp - 273.15);
-              var temprature = temprature.toFixed(2);
+              var tempf = (json.main.temp - 273.15)*9/5+32;
               console.log(temprature)
+              var temprature = temprature.toFixed(2);
+              var tempf = tempf.toFixed(2);
+              
+              
               console.log(json.weather[0].main);
-              bot.chat('> The temprature in ' + location + ' is ' + temprature + ' celsius. The weather is currently ' + json.weather[0].main + '.')
+              bot.chat('> The temprature in ' + location + ' is ' + temprature + ' celsius & ' + tempf  + ' fahrenheit for the autistic americans. The weather is currently ' + json.weather[0].main + '.')
+            }
           });
+          
 
         
          
