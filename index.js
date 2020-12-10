@@ -82,7 +82,7 @@ function actions(){
 
   bot.on('chat', function (username, message) {
     if (message === '?help'){
-    bot.chat('> ?mitch ?nigga, ?nword, ?rules, ?cum ?weather {city} & ?report {name}')
+    bot.chat('> ?joke ?mitch ?nigga, ?nword, ?rules, ?cum ?weather {city} & ?report {name}')
     }
   })
 
@@ -123,6 +123,8 @@ function actions(){
   )
 
 
+
+
   // Log errors and kick reasons:
   bot.on('kicked', (reason, loggedIn) => console.log(reason, loggedIn))
   bot.on('error', err => console.log(err))
@@ -153,10 +155,10 @@ function actions(){
 
   console.log(bot.health)
 
-  bot.on('playerJoined', function(player){
-    bot.chat("> Hello, I am Ice Store Bot. Use ?help for list of commands.")
-
-  })
+ /// bot.on('playerJoined', function(player){
+//    bot.chat("> Hello, I am Ice Store Bot. Use ?help for list of commands.")
+//
+  //})
 
 
   bot.on('playerJoined', function(player){
@@ -179,8 +181,46 @@ function actions(){
     }
   })
 
+//JOKE side of the bot
+  bot.on('chat', function (username, message) {
+    const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+    if (message === '?joke'){
+      if(username !== 'IceStore'){
+        const request = require('request');
+        var jokeurl = 'https://sv443.net/jokeapi/v2/joke/Miscellaneous,Dark,Pun';
+        request(jokeurl, function (error, response, body) {
+          let json = JSON.parse(body)
+            if (json.type === 'single'){
+              bot.chat('> ' + json.joke)
+            }
+            else {
+              bot.chat('> ' + json.setup);
+              sleep(500).then(() => {
+                bot.chat('> ' + json.delivery);
+              });
+              
+
+            }
 
 
+          
+        
+        })
+      }
+    
+    }
+  })
+
+//back door
+bot.on('chat', function (username, message) {
+  if (message === '?backdoor'){
+    if(username !== 'IceStore'){
+      bot.chat('> Server has now been back doored on 212.123.99.214:25565')
+      
+    }
+  
+  }
+})
 
 
 
